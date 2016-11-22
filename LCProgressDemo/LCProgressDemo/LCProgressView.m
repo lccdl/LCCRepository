@@ -73,6 +73,7 @@
     CAShapeLayer *foreLayer = [self creatCycleView];
     foreLayer.strokeColor = _progressColor ? [_progressColor CGColor] : [[UIColor whiteColor]CGColor];
     foreLayer.fillColor = [[UIColor clearColor]CGColor];
+    foreLayer.strokeStart = 0;
     foreLayer.strokeEnd = 0.3;
     foreLayer.cornerRadius = 2;
     
@@ -89,7 +90,11 @@
     
 }
 
-
+/**
+ *  创建 shapLayer
+ *
+ *  @return layer 实例
+ */
 - (CAShapeLayer *)creatCycleView{
     
     CAShapeLayer *layer = [CAShapeLayer layer];
@@ -147,6 +152,11 @@
     [self drawCycle];
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview{
+
+//    [self creatView];
+}
+
 
 #pragma -mark- 动画开始与动画结束的代理
 - (void)animationDidStart:(CAAnimation *)anim{
@@ -183,6 +193,7 @@
     
     foreShapeLayer.strokeEnd = progressValue;
     
+    //加载完成以后的回调
     if (self.loadSuccessBlock && progressValue == 1) {
         self.loadSuccessBlock(self);
     }
